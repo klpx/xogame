@@ -4,19 +4,19 @@
 
 <table>
 	<tr>
-		<td>Game ID</td>
 		<td>Player X ID</td>
 		<td>Player O ID</td>
 		<td>Current player ID</td>
+		<td></td>
 	</tr>
 
 	<?php
 	foreach ($games as $game) {
 		echo "<tr>";
-		echo "<td>{$game->id}</td>";
-		echo "<td>{$game->playerX_id}</td>";
+		echo "<td>{$game->playerX}</td>";
 		echo "<td>{$game->playerO_id}</td>";
 		echo "<td>{$game->current_player_id}</td>";
+		echo "<td><a href='/?r=game/play&gid={$game->id}'>Play</a></td>";
 		echo "</tr>";
 	}
 	?>

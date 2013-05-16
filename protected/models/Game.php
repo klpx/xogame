@@ -10,4 +10,13 @@ class Game extends CActiveRecord {
 	{
 	    return 'game';
 	}
+
+	public function relations ()
+	{
+		return array(
+			'cells' => array(self::HAS_MANY, 'Cell', 'game_id'),
+			'playerX' => array(self::HAS_ONE, 'User', 'playerX_id'),
+			'playerO' => array(self::HAS_ONE, 'User', 'playerO_id')
+		);
+	}
 }
