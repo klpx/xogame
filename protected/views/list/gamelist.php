@@ -13,8 +13,14 @@
 	<?php
 	foreach ($games as $game) {
 		echo "<tr>";
-		echo "<td>{$game->playerX->name}</td>";
-		echo "<td>{$game->playerO->name}</td>";
+        if (!empty($game->playerX))
+		    echo "<td>{$game->playerX->name}</td>";
+        else
+            echo "<td> ожидаем </td>";
+        if (!empty($game->playerO))
+    		echo "<td>{$game->playerO->name}</td>";
+        else
+            echo "<td> ожидаем </td>";
 		echo "<td>{$game->current_player_id}</td>";
 		echo "<td><a href='/?r=game/play&gid={$game->id}'>Play</a></td>";
 		echo "</tr>";
