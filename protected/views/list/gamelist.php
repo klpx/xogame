@@ -13,8 +13,8 @@
 	<?php
 	foreach ($games as $game) {
 		echo "<tr>";
-		echo "<td>{$game->playerX}</td>";
-		echo "<td>{$game->playerO_id}</td>";
+		echo "<td>{$game->playerX->name}</td>";
+		echo "<td>{$game->playerO->name}</td>";
 		echo "<td>{$game->current_player_id}</td>";
 		echo "<td><a href='/?r=game/play&gid={$game->id}'>Play</a></td>";
 		echo "</tr>";
