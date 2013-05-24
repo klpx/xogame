@@ -38,6 +38,30 @@ class GameController extends Controller
             $cells[$cell->Y][$cell->X] = $cell->content;
         }
 
-        $this->render('gamefield', array('cells' => $cells));
+        $this->render('gamefield', array('cells' => $cells, 'game' => $game));
+    }
+
+    public function actionCell() {
+
+        $cell = new Cell;
+        $cell->X = $_GET['x'];
+        $cell->Y = $_GET['y'];
+
+        $game = Game::model()->with('cells')->findByPk($_GET['gid']);
+        if ($game->current_player_id === $game->playerX_id) {
+            $cell->content = 'X';
+            $game->current_player_id = $game->playerO_id;
+        }
+        else {
+            $cell->content = 'O';
+            $game->current_player_id = $game->playerX_id;
+        }
+
+        $cell->game_id = $game->id;
+
+        $game->save();
+        $cell->save();
+
+        $this->redirect(array('game/play', 'gid' => $game->id));
     }
 }

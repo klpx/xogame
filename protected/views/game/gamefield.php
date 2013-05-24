@@ -1,8 +1,10 @@
 <table id="gamefield">
 <?php
-foreach($cells as $row) {
+foreach($cells as $y => $row) {
 	echo "<tr>";
-	foreach ($row as $content) {
+	foreach ($row as $x => $content) {
+        if (is_null($content))
+            $content = "<a href='?r=game/cell&x={$x}&y={$y}&gid={$game->id}'>Ходить</a>";
 		echo "<td>{$content}</td>";
 	}
 	echo "</tr>";
