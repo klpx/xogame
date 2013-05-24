@@ -57,7 +57,7 @@ class GameController extends Controller
             $game->current_player_id = $game->playerX_id;
         }
 
-        $cell->game_id = $game->id;
+        $cell->game_id = $game->id; 
 
         $game->save();
         $cell->save();
