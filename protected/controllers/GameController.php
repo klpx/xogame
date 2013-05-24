@@ -27,6 +27,17 @@ class GameController extends Controller
             throw new CHttpException('404', 'Game not created!');
         }
 
-        
+        $fieldSize = Yii::app()->params['fieldSize'];
+        $cells = array();
+
+        for ($y=0; $y<$fieldSize; $y++) {
+            $cells[$y] = array_fill(0, $fieldSize, null);
+        }
+
+        foreach ($game->cells as $cell) {
+            $cells[$cell->Y][$cell->X] = $cell->content;
+        }
+
+        $this->render('gamefield', array('cells' => $cells));
     }
 }
