@@ -26,7 +26,6 @@ class GameController extends Controller
         if (!is_object($game)) {
             throw new CHttpException('404', 'Game not created!');
         }
-
         $fieldSize = Yii::app()->params['fieldSize'];
         $cells = array();
 
