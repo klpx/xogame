@@ -1,9 +1,10 @@
 <table id="gamefield">
 <?php
+
 foreach($cells as $y => $row) {
 	echo "<tr>";
 	foreach ($row as $x => $content) {
-        if (is_null($content))
+        if (is_null($content) && Yii::app()->user->id == $game->current_player_id)
             $content = "<a href='?r=game/cell&x={$x}&y={$y}&gid={$game->id}'>Ходить</a>";
 		echo "<td>{$content}</td>";
 	}

@@ -22,7 +22,7 @@
         else
             echo "<td> ожидаем </td>";
 		echo "<td>{$game->current_player_id}</td>";
-		echo "<td><a href='/?r=game/play&gid={$game->id}'>Play</a></td>";
+		echo "<td><a href='/?r=game/join&gid={$game->id}'>Play</a></td>";
 		echo "</tr>";
 	}
 	?>
