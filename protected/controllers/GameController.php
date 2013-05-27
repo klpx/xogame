@@ -26,18 +26,23 @@ class GameController extends Controller
         if (!is_object($game)) {
             throw new CHttpException('404', 'Game not created!');
         }
-        $fieldSize = Yii::app()->params['fieldSize'];
-        $cells = array();
 
-        for ($y=0; $y<$fieldSize; $y++) {
-            $cells[$y] = array_fill(0, $fieldSize, null);
+        if(!is_null($game->win_player_id)) {
+            echo 'Игра окончена! Победил игрок с айдишником ' . $game->win_player_id;
+        } else {
+            $fieldSize = Yii::app()->params['fieldSize'];
+            $cells = array();
+
+            for ($y=0; $y<$fieldSize; $y++) {
+                $cells[$y] = array_fill(0, $fieldSize, null);
+            }
+
+            foreach ($game->cells as $cell) {
+                $cells[$cell->Y][$cell->X] = $cell->content;
+            }
+
+            $this->render('gamefield', array('cells' => $cells, 'game' => $game));
         }
-
-        foreach ($game->cells as $cell) {
-            $cells[$cell->Y][$cell->X] = $cell->content;
-        }
-
-        $this->render('gamefield', array('cells' => $cells, 'game' => $game));
     }
 
     public function actionCell() {
@@ -60,6 +65,9 @@ class GameController extends Controller
 
         $game->save();
         $cell->save();
+
+        $game->detectVictory($cell->X, $cell->Y, $cell->content);
+        $game->save();
 
         $this->redirect(array('game/play', 'gid' => $game->id));
     }
