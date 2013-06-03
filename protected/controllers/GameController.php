@@ -67,14 +67,24 @@ class GameController extends Controller
         }
     }
 
-    public function actionCell() {
+    public function actionCell($gid) {
 
         $cell = new Cell;
         $cell->X = $_GET['x'];
         $cell->Y = $_GET['y'];
 
+        $dbcell = Cell::model()->exists('Y =:cellY and X =:cellX and game_id =:gid', 
+            array(':cellX' => $cell->X, ':cellY' => $cell->Y, ':gid' => $gid));
+        
+        if ($dbcell) 
+            throw new CHttpException('403', 'YOU FOOL! ANOTHER PLAYER GOES');
+
         $game = Game::model()->with('cells')->findByPk($_GET['gid']);
-        if ($game->current_player_id === $game->playerX_id) {
+
+        if (Yii::app()->user->id != $game->current_player_id) 
+            throw new CHttpException('403', 'ACCESS DENIED');
+
+        if ($game->current_player_id === $game->playerX_id ) {
             $cell->content = 'X';
             $game->current_player_id = $game->playerO_id;
         }

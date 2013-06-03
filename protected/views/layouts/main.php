@@ -26,14 +26,24 @@
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
+		<?php 
+		if (!Yii::app()->user->id) {
+			$this->widget('zii.widgets.CMenu',array(
+				'items'=>array(
+					array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				),
+			));
+		} else {
+			$this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Game List ('.Yii::app()->user->model->waitCounter().')', 'url'=>array('/list')),
+				array('label'=>'Game List', 'url'=>array('/list')),
 				array('label'=>'Current Games ('.Yii::app()->user->model->waitCounter().')', 'url'=>array('/list/current')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
-		)); ?>
+		));
+		}
+
+		 ?>
 	</div><!-- mainmenu -->
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
